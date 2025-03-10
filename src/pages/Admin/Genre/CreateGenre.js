@@ -5,8 +5,9 @@ import { IoMdClose } from "react-icons/io";
 import { postGenre } from '../../../services/Admin/genreService';
 import { capitalizeFirstLetter } from '../../../helpers';
 
-function CreateGenre() {
-  console.log("create");
+function CreateGenre(props) {
+  const { onReload } = props;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -57,6 +58,7 @@ function CreateGenre() {
           theme: "light",
         });
         closeModal();
+        onReload();
       } else {
         toast.error(res.data.message, {
           position: "top-right",

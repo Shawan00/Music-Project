@@ -11,8 +11,8 @@ function Genre() {
 	const [searchParams] = useSearchParams();
 	const page = parseInt(searchParams.get("page")) || 1;
 	const pageSize = parseInt(searchParams.get("pageSize")) || 8;
+	const [reload, setReload] = useState(0);
 
-	console.log("render");
 	useEffect(() => {
 		document.title = "Manage genre | Music project";
 		const getData = async () => {
@@ -20,11 +20,15 @@ function Genre() {
 			setGenreData(res.data);
 		}
 		getData();
-	}, [page, pageSize]);
+	}, [page, pageSize, reload]);
+
+	const handleReload = () => {
+		setReload(prev => prev + 1);
+	}
 
 	return genreList ? (
 		<>
-			<CreateGenre />
+			<CreateGenre onReload={handleReload} />
 			<Pagination objectPagination={genreData.objectPagination}/>
 			<GenreList data={genreList} />
 			<Pagination objectPagination={genreData.objectPagination}/>
